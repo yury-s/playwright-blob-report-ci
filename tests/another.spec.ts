@@ -9,6 +9,7 @@ test('another has title', async ({ page }) => {
   await expect(page).toHaveTitle(/Playwright/);
 });
 
+
 test('another get started link', async ({ page }) => {
   // Click the get started link.
   await page.getByRole('link', { name: 'Get started' }).click();
