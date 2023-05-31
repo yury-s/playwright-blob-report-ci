@@ -17,6 +17,7 @@ test('another get started link', async ({ page }) => {
   await expect(page).toHaveURL(/.*intro/);
 });
 
+
 test('another browser.launch doc', async ({ page }) => {
   await page.getByRole('link', { name: 'API', exact: true }).click();
   await page.getByRole('navigation', { name: 'Docs sidebar' }).getByRole('link', { name: 'Browser', exact: true }).click();
