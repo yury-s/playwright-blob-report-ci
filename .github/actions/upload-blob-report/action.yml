@@ -1,5 +1,5 @@
 name: 'Upload blob report'
-description: 'Upload blob to Azure blob storage or to GitHub artifacts (for pull requests)'
+description: 'Upload blob report to GitHub artifacts'
 inputs:
   report_dir:
     description: 'Directory containing blob report'
