@@ -27,8 +27,13 @@ jobs:
           echo "Homebrew software:"
           ls -l /opt/homebrew/Caskroom/firefox/
         fi
-    - name: Print firefox.exe location on Windows
+    - name: Print firefox.exe from default path
       if: runner.os == 'Windows'
-      shell: cmd
+      shell: pwsh
       run: |
-        where firefox.exe || echo Firefox not found        
+        $defaultPath = 'C:\Program Files\Mozilla Firefox\firefox.exe'
+        if (Test-Path $defaultPath) {
+          Write-Host "Found at: $defaultPath"
+        } else {
+          Write-Host "Not found at default path"
+        }
