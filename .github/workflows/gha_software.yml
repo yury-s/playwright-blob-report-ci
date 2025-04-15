@@ -16,8 +16,19 @@ jobs:
         echo "OS: $RUNNER_OS"
         if [[ "$RUNNER_OS" == "Linux" ]]; then
           which firefox || echo "Firefox not found"
+          ls -l $(which firefox) || echo "Can't follow symlink"
+          ls -l /snap/bin/firefox || echo "Firefox snap not found"
         elif [[ "$RUNNER_OS" == "Windows" ]]; then
           cmd.exe /C "where firefox" || echo "Firefox not found"
         elif [[ "$RUNNER_OS" == "macOS" ]]; then
           ls -l /Applications/Firefox.app/Contents/MacOS/firefox || echo "Firefox not found"
+          echo "All software:"
+          ls -l /Applications
+          echo "Homebrew software:"
+          ls -l /opt/homebrew/Caskroom/firefox/
         fi
+    - name: Print firefox.exe location on Windows
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |
+        where firefox.exe || echo Firefox not found        
