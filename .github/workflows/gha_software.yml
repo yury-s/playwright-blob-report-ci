@@ -16,7 +16,6 @@ jobs:
         path: playwright
         sparse-checkout: |
           packages/playwright-dashboard/src/
-        sparse-checkout-cone-mode: false
     - name: Print sparse checkout
       if: runner.os != 'Windows'
       shell: bash
