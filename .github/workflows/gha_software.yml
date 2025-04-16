@@ -10,6 +10,20 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
+    - uses: actions/checkout@v4
+      with:
+        repository: microsoft/playwright
+        path: playwright
+        sparse-checkout: |
+          packages/playwright-dashboard/src/
+        sparse-checkout-cone-mode: false
+    - name: Print sparse checkout
+      if: runner.os != 'Windows'
+      shell: bash
+      run: |
+        cd playwright
+        find .
+
     - name: Print environment
       if: runner.os != 'Windows'
       shell: bash
@@ -19,31 +33,3 @@ jobs:
       if: runner.os == 'Windows'
       shell: cmd
       run: set
-
-    - name: Print firefox location
-      shell: bash
-      run: |
-        echo "OS: $RUNNER_OS"
-        if [[ "$RUNNER_OS" == "Linux" ]]; then
-          which firefox || echo "Firefox not found"
-          ls -l $(which firefox) || echo "Can't follow symlink"
-          ls -l /snap/bin/firefox || echo "Firefox snap not found"
-        elif [[ "$RUNNER_OS" == "Windows" ]]; then
-          cmd.exe /C "where firefox" || echo "Firefox not found"
-        elif [[ "$RUNNER_OS" == "macOS" ]]; then
-          ls -l /Applications/Firefox.app/Contents/MacOS/firefox || echo "Firefox not found"
-          echo "All software:"
-          ls -l /Applications
-          echo "Homebrew software:"
-          ls -l /opt/homebrew/Caskroom/firefox/
-        fi
-    - name: Print firefox.exe from default path
-      if: runner.os == 'Windows'
-      shell: pwsh
-      run: |
-        $defaultPath = 'C:\Program Files\Mozilla Firefox\firefox.exe'
-        if (Test-Path $defaultPath) {
-          Write-Host "Found at: $defaultPath"
-        } else {
-          Write-Host "Not found at default path"
-        }
