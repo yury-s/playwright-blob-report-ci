@@ -10,6 +10,16 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
+    - name: Print environment
+      if: runner.os != 'Windows'
+      shell: bash
+      run: |
+        env
+    - name: Dump env using cmd
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: set
+
     - name: Print firefox location
       shell: bash
       run: |
